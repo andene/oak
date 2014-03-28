@@ -2,7 +2,7 @@
 
 interface ErrorControllerInterface {
 
-    public function __construct();
+    public function __construct(\Exception $e);
 
     public function displayError():void;
 }

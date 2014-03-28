@@ -8,15 +8,20 @@ class IndexController extends \Oak\Controller\BaseController {
 
     }
 
-    public function index():void {
+    public function index():string {
 
-        echo "<h1>Welcome to Oak Framework</h1>";
-        return "hej!!!";
+        return file_get_contents(dirname(__FILE__)."/../view/index/index.php");
+    }
+
+    public function office($officeName): string {
+
+        return "Welcome to " . $officeName;
     }
 
     public function about($username, $id) :void {
-        echo "<br />About Action";
-        echo __FUNCTION__ . " loaded";
+    
         echo "loaded " . $username . " with id " . $id;
     }
+
+
 }

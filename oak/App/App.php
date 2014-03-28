@@ -14,9 +14,9 @@ class App {
         try {
             $rTo = $this->parseRequestRoute();
         } catch (\Oak\Exception\NotFoundException $e) {
-            $error = new \App\Controller\ErrorController();
+            $error = new \App\Controller\ErrorController($e);
             $error->displayError();
-            die();
+            return;
         }
 
         $controllerName = ucfirst($rTo->controller)."Controller";
@@ -30,7 +30,6 @@ class App {
 
     public function dispatch($response): void {
         echo $response;
-
     }
 
     public function addRoutes(\Oak\Route\Routes $routes):void {

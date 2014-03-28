@@ -2,11 +2,14 @@
 
 class ErrorController implements ErrorControllerInterface {
 
-    public function __construct():void {
 
+    public function __construct(private \Exception $e):void {
+        $this->e = $e;
     }
     public function displayError():void {
-        echo "Errors!";
+        echo "<pre>";
+        print_r($this->e);
+        echo "</pre>";
     }
 
     public function notfound(?Array $params) :void {
