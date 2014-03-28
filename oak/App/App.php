@@ -14,7 +14,6 @@ class App {
         try {
             $rTo = $this->parseRequestRoute();
         } catch (\Oak\Exception\NotFoundException $e) {
-            //Redirect::to('/error', 301);
             $error = new \App\Controller\ErrorController();
             $error->displayError();
             die();
@@ -25,7 +24,13 @@ class App {
 
         $name = "\App\Controller\\".$controllerName;
         $controller = new $name();
-        call_user_func_array(array($controller, $actionName), $rTo->params);
+        $res = call_user_func_array(array($controller, $actionName), $rTo->params);
+        $this->dispatch($res);
+    }
+
+    public function dispatch($response): void {
+        echo $response;
+
     }
 
     public function addRoutes(\Oak\Route\Routes $routes):void {

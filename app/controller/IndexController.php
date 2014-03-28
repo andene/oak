@@ -3,10 +3,15 @@
 
 class IndexController extends \Oak\Controller\BaseController {
 
-    public function __construct($params):void {
+    public function __construct():void {
         parent::__construct();
-        echo __FUNCTION__ . " loaded";
-        print_r($params);
+
+    }
+
+    public function index():void {
+
+        echo "<h1>Welcome to Oak Framework</h1>";
+        return "hej!!!";
     }
 
     public function about($username, $id) :void {

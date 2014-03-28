@@ -8,10 +8,8 @@ use \Oak\Header\Request as Request;
 use \Oak\Header\Redirect as Redirect;
 use \Oak\App\App as App;
 
-
-
 $routes = new Routes();
-$routes->addRoute(new Route('home', 'index', 'about'));
+$routes->addRoute(new Route('home', 'index', 'index'));
 $routes->addRoute(new Route('index/information', 'index', 'information'));
 $routes->addRoute(new Route('kontakt', 'index', 'contact'));
 $routes->addRoute(new Route('kontakt/{office}', 'index', 'office'));
