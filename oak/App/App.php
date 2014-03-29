@@ -16,27 +16,25 @@ class App {
         } catch (\Oak\Exception\NotFoundException $e) {
             $error = new \App\Controller\ErrorController($e);
             $error->displayError();
-            return;
+            die();
         }
 
-        $controllerName = ucfirst($rTo->controller)."Controller";
+        $controller = $this->createController($rTo->controller);
         $actionName = $rTo->action;
 
-        $name = "\App\Controller\\".$controllerName;
-        $controller = new $name();
-        $res = call_user_func_array(array($controller, $actionName), $rTo->params);
-        $this->dispatch($res);
+        $view = call_user_func_array(array($controller, $actionName), $rTo->params);
+        $this->dispatch($view);
     }
 
-    public function dispatch($response): void {
-        echo $response;
+    public function dispatch($view): void {
+        require $view->viewFilePath;
     }
 
     public function addRoutes(\Oak\Route\Routes $routes):void {
             $this->routes = $routes;
     }
 
-    public function parseRequestRoute(): Route {
+    public function parseRequestRoute(): \Oak\Route\Route {
 
         preg_match_all('#{([a-z0-9][a-zA-Z0-9_,]*)}#', urldecode($this->request->getRequestUri()), $matches);
         foreach($this->routes->getRoutes() as $route) {
@@ -55,7 +53,19 @@ class App {
                 return $route;
             }
         }
-        throw new \Oak\Exception\NotFoundException("Couldn't find route " . $this->request->getRequestUri());
+        throw new \Oak\Exception\NotFoundException("Couldn't find route " . $this->request->getRequestUri(), null, null);
+    }
+
+    private function createController($requestController):\Oak\Controller\BaseController {
+
+        $controllerName = ucfirst($requestController)."Controller";
+        $name = "\App\Controller\\".$controllerName;
+        $controller = new $name();
+        if(!$controller  instanceof \Oak\Controller\BaseController) {
+            throw new \Exception($name . " must the an instance if BaseController");
+        }
+        return $controller;
+
     }
 
 }
