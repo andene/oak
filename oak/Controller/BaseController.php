@@ -6,8 +6,7 @@ class BaseController {
     }
 
     public function __call($name, $args): string {
-        
-        return "Method: " . $name . " not found!";
+        //return "Method: " . $name . " not found!";
     }
 
 }

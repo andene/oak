@@ -16,7 +16,7 @@ class View {
         $this->viewpath = $viewpath;
         $path = $this->fixPath($viewpath);
         if(!file_exists($path)) {
-            throw new \Exception("View file ".$viewpath." not found");
+            throw new \Oak\Exception\NotFoundException("View file ".$viewpath." not found", 0, null);
         }
         $this->viewContent = file_get_contents($path);
         $this->viewFilePath = $path;

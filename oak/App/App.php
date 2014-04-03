@@ -1,12 +1,16 @@
 <?hh namespace Oak\App;
 
-class App {
+
+class App implements \ArrayAccess{
 
     public $routes;
     protected $request;
 
-    public function __construct():void {
-        $this->request = new \Oak\Header\Request();
+    public function __construct(\Oak\Route\Routes $routes, \Oak\Header\Request $request):void {
+
+        $this->request = $request;
+        $this->routes = $routes;
+
     }
 
     public function run():void {
@@ -23,15 +27,16 @@ class App {
         $actionName = $rTo->action;
 
         $view = call_user_func_array(array($controller, $actionName), $rTo->params);
-        $this->dispatch($view);
+        if($view instanceof \Oak\View\View) {
+            $this->dispatch($view);
+        } else {
+            echo $view;
+        }
+
     }
 
     public function dispatch($view): void {
         require $view->viewFilePath;
-    }
-
-    public function addRoutes(\Oak\Route\Routes $routes):void {
-            $this->routes = $routes;
     }
 
     public function parseRequestRoute(): \Oak\Route\Route {
@@ -43,8 +48,7 @@ class App {
             $regex = '#'.$regex.'$#';
 
             if(preg_match($regex, $this->request->getRequestUri(), $m)) {
-                // Get the parameter keys from request URI
-                preg_match_all('/{([a-zA-Z0-9_-]*)}/', $route->path, $keys);
+                preg_match_all('/{([a-zA-Z0-9_-]*)}/', $route->path, $keys); // Get the parameter keys from request URI
                 unset($m[0]); //Remove the whole request to be able to merge keys and parameters
 
                 $matched = array_combine($keys[1], $m);
@@ -66,6 +70,24 @@ class App {
         }
         return $controller;
 
+    }
+
+
+    public function offsetSet($offset, $value):void {
+        if (is_null($offset)) {
+            $this->container[] = $value;
+        } else {
+            $this->container[$offset] = $value;
+        }
+    }
+    public function offsetExists($offset):bool {
+        return isset($this->container[$offset]);
+    }
+    public function offsetUnset($offset) {
+        unset($this->container[$offset]);
+    }
+    public function offsetGet($offset) {
+        return isset($this->container[$offset]) ? $this->container[$offset] : null;
     }
 
 }

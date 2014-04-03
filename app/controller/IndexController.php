@@ -27,9 +27,14 @@ class IndexController extends \Oak\Controller\BaseController {
         return "Welcome to " . $officeName;
     }
 
-    public function about($username, $id) :void {
+    public function about($username, $id) :\Oak\View\View {
 
-        echo "loaded " . $username . " with id " . $id;
+        $view = new \Oak\View\View('index.user');
+
+        $headline = "Välkommen " . $username . " (".$id.")";
+
+        $view->with('title', $this->title)->with('headline', $headline);
+        return $view;
     }
 
 
