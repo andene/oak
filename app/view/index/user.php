@@ -13,6 +13,7 @@
     </head>
     <body>
     <h2>    <?php echo $view->headline ;?></h2>
+    <p><a href="/">Start</a><p>
         <p><a href="/help">Hjälp</a><p>
             <p><a href="/user/andreas/29">Andreas</a><p>
         <script src="js/main.js"></script>

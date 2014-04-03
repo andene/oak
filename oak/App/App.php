@@ -50,6 +50,12 @@ class App{
             $regex = preg_replace('/{.*?}/', '([a-zA-Z0-9_-]*)', $route->path);
             $regex = '#'.$regex.'$#';
 
+            if($this->request->getRequestUri() === "") {
+                    if($route->path == '/') {
+                        return $route;
+                    }
+            }
+
             if(preg_match($regex, $this->request->getRequestUri(), $m)) {
                 preg_match_all('/{([a-zA-Z0-9_-]*)}/', $route->path, $keys); // Get the parameter keys from request URI
                 unset($m[0]); //Remove the whole request to be able to merge keys and parameters
