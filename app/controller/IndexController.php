@@ -1,4 +1,4 @@
-<?hh namespace App\controller;
+<?hh namespace App\Controller;
 
 
 class IndexController extends \Oak\Controller\BaseController {
