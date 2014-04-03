@@ -10,11 +10,13 @@ class View {
 
     public function __construct(private string $viewpath):View {
 
-
-        $this->viewFolder = dirname(__FILE__)."/../../app/view/";
+        $config = \Container::get('config');
+        $this->viewFolder = $config['viewFolder']."/";
 
         $this->viewpath = $viewpath;
         $path = $this->fixPath($viewpath);
+
+
         if(!file_exists($path)) {
             throw new \Oak\Exception\NotFoundException("View file ".$viewpath." not found", 0, null);
         }

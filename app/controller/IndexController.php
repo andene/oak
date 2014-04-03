@@ -14,7 +14,6 @@ class IndexController extends \Oak\Controller\BaseController {
 
     public function index():\Oak\View\View {
 
-
         $view = new \Oak\View\View('index.index');
         $view->with('title', $this->title)->with('headline', 'Min rubrik');
 

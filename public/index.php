@@ -77,7 +77,7 @@ class logger extends \Oak\Facades\Facade {
 
 use \Oak\App\App;
 
-require "../bootstrap/Routes.php";
+require "../bootstrap/boot.php";
 
 Container::set('app', function() use ($routes) {
     return new App(Container::get('routes'), new \Oak\Header\Request());

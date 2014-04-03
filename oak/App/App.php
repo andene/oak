@@ -3,7 +3,7 @@
 use \App\Controller\IndexController;
 
 
-class App implements \ArrayAccess{
+class App{
 
     public $routes;
     protected $request;
@@ -12,7 +12,6 @@ class App implements \ArrayAccess{
 
         $this->request = $request;
         $this->routes = $routes;
-
 
     }
 
@@ -30,6 +29,7 @@ class App implements \ArrayAccess{
         $actionName = $rTo->action;
 
         $view = call_user_func_array(array($controller, $actionName), $rTo->params);
+
         if($view instanceof \Oak\View\View) {
             $this->dispatch($view);
         } else {
@@ -66,8 +66,7 @@ class App implements \ArrayAccess{
 
     private function createController($requestController):\Oak\Controller\BaseController {
 
-        $controllerName = ucfirst($requestController)."Controller";
-        $name = "\App\Controller\\".$controllerName;
+        $name = "\App\Controller\\".ucfirst($requestController)."Controller";
         $controller = new $name();
         if(!$controller  instanceof \Oak\Controller\BaseController) {
             throw new \Exception($name . " must the an instance if BaseController");
@@ -77,21 +76,5 @@ class App implements \ArrayAccess{
     }
 
 
-    public function offsetSet($offset, $value):void {
-        if (is_null($offset)) {
-            $this->container[] = $value;
-        } else {
-            $this->container[$offset] = $value;
-        }
-    }
-    public function offsetExists($offset):bool {
-        return isset($this->container[$offset]);
-    }
-    public function offsetUnset($offset) {
-        unset($this->container[$offset]);
-    }
-    public function offsetGet($offset) {
-        return isset($this->container[$offset]) ? $this->container[$offset] : null;
-    }
 
 }
