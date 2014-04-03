@@ -9,18 +9,17 @@ class Container implements \Oak\Container\ContainerInterface {
 
     public static function set($name, $service) {
         if(!is_object($service)) {
-            throw new InvalidArgumentException("Only objects can be registred");
+            throw new \InvalidArgumentException("Only objects can be registred");
         }
 
         if(!in_array($service, self::$services, true)) {
             self::$services[$name] = $service;
         }
-
     }
 
     public static function get($name, array $params = array()) {
         if(!isset(self::$services[$name])) {
-            throw new RuntimeException($name ." has not been registred in the container");
+            throw new \RuntimeException($name ." has not been registred in the container");
         }
         $service = self::$services[$name];
 
@@ -44,7 +43,6 @@ class Container implements \Oak\Container\ContainerInterface {
     public static function clear() {
         $this->services = array();
     }
-
 
     /**
 	 * Setup the layout used by the controller.
