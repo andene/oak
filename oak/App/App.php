@@ -1,5 +1,7 @@
 <?hh namespace Oak\App;
 
+use \App\Controller\IndexController;
+
 
 class App implements \ArrayAccess{
 
@@ -11,7 +13,7 @@ class App implements \ArrayAccess{
         $this->request = $request;
         $this->routes = $routes;
 
-        print_r($request); die();
+
     }
 
     public function run():void {
