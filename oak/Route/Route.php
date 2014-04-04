@@ -3,7 +3,7 @@
 class Route {
 
     public \Vector $params;
-    public function __construct(public string $path, public mixed $controller, public ?string $action, $params = null) {
+    public function __construct(public string $path, public mixed<object, string> $controller, public ?string $action, $params = null) {
 
         $this->path = strtolower($path);
         $this->controller = $this->_getController($controller);
@@ -20,9 +20,7 @@ class Route {
             return $controller;
         } elseif(is_string($controller)) {
             return strtolower($controller);
-        } else {
-            throw new \Exception("Controller must be of type string or object, ". gettype($controller) . " given");
-        }
+        } 
     }
 
 
