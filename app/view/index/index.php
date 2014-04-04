@@ -12,9 +12,16 @@
     </head>
     <body>
     <h2>    <?php echo $view->headline ;?></h2>
-    <p><a href="/">Start</a><p>
-        <p><a href="/help">Hjälp</a><p>
-            <p><a href="/user/andreas/29">Andreas</a><p>
+
+    <ul>
+        <li><a href="/">Start</a></li>
+        <li><a href="/help">Hjälp</a></li>
+        <li><a href="/user/MrOak/123">User Route With param</a></li>
+        <li><a href="/test/param1/param2">Closure Route</a></li>
+
+    </ul>
+
+    
         <script src="js/main.js"></script>
     </body>
 </html>

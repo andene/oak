@@ -26,16 +26,18 @@ class App{
         }
 
         $controller = $this->createController($rTo->controller);
-        $actionName = $rTo->action;
 
-        $view = call_user_func_array(array($controller, $actionName), $rTo->params);
+        if($controller instanceof \Closure) {
+            call_user_func_array($controller, $rTo->params);
 
-        if($view instanceof \Oak\View\View) {
-            $this->dispatch($view);
         } else {
-            echo $view;
+            $view = call_user_func_array(array($controller, $rTo->action), $rTo->params);
+            if($view instanceof \Oak\View\View) {
+                $this->dispatch($view);
+            } else {
+                echo $view;
+            }
         }
-
     }
 
     public function dispatch($view): void {
@@ -70,7 +72,11 @@ class App{
         throw new \Oak\Exception\NotFoundException("Couldn't find route " . $this->request->getRequestUri(), null, null);
     }
 
-    private function createController($requestController):\Oak\Controller\BaseController {
+    private function createController($requestController): mixed<\Oak\Controller\BaseController, Closure> {
+
+        if($requestController instanceof \Closure) {
+            return $requestController;
+        }
 
         $name = "\App\Controller\\".ucfirst($requestController)."Controller";
         $controller = new $name();
