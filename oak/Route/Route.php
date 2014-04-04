@@ -5,9 +5,9 @@ class Route {
     public \Vector $params;
     public function __construct(public string $path, public mixed $controller, public ?string $action, $params = null) {
 
-        $this->path = ($path);
+        $this->path = strtolower($path);
         $this->controller = $this->_getController($controller);
-        $this->action = ($action);
+        $this->action = strtolower($action);
 
         if(null !== $params) {
             $this->params = strtolower($params);
