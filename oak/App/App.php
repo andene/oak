@@ -25,12 +25,11 @@ class App{
             die();
         }
 
-        $controller = $this->createController($rTo->controller);
-
-        if($controller instanceof \Closure) {
-            call_user_func_array($controller, $rTo->params);
+        if($rTo->controller instanceof \Closure) {
+            call_user_func_array($rTo->controller, $rTo->params);
 
         } else {
+            $controller = $this->createController($rTo->controller);
             $view = call_user_func_array(array($controller, $rTo->action), $rTo->params);
             if($view instanceof \Oak\View\View) {
                 $this->dispatch($view);
@@ -41,7 +40,7 @@ class App{
     }
 
     public function dispatch($view): void {
-        require $view->viewFilePath;
+        echo $view->render();
     }
 
     public function parseRequestRoute(): \Oak\Route\Route {
@@ -74,9 +73,6 @@ class App{
 
     private function createController($requestController): mixed<\Oak\Controller\BaseController, Closure> {
 
-        if($requestController instanceof \Closure) {
-            return $requestController;
-        }
 
         $name = "\App\Controller\\".ucfirst($requestController)."Controller";
         $controller = new $name();
