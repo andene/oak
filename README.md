@@ -11,4 +11,16 @@ Routes is managed in "bootstrap/routes.php"
 
 ```php
 // bootstrap/routes.php
+
+<?hh
+use \Oak\Route\Route;
+use \Oak\Route\Routes;
+
+$routes = new Routes();
+
+$routes->addRoute(new Route('/', 'index', 'index'));
+$routes->addRoute(new Route('info/{param}', 'index', 'about'));
+
+Container::set('routes', $routes);
+
 ```
