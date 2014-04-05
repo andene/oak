@@ -8,12 +8,11 @@ class HelpController extends BaseController{
 
     public function index(): \Oak\View\View {
 
-        //Logger::log("Hello from HelpController");
+        Logger::log("Hello from HelpController");
 
         $view = new \Oak\View\View('help.index');
         $view->with('title', 'Help for Oak')
-             ->with('headline', 'Help!')
-             ->with('footer', 'Help Footer');
+             ->with('headline', 'Help!');
 
         return $view;
 
