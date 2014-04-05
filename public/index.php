@@ -54,25 +54,6 @@ class Container implements \Oak\Container\ContainerInterface {
     }
 }
 
-class logger extends \Oak\Facades\Facade {
-
-    public function __construct(){
-
-    }
-
-    public static function getName() {
-        return 'logger';
-    }
-
-    public function log(string $message):void {
-        echo "Logging message " . $message . "\n";
-    }
-}
-
-
-
-
-
 
 
 use \Oak\App\App;
@@ -81,10 +62,6 @@ require "../bootstrap/boot.php";
 
 Container::set('app', function() use ($routes) {
     return new App(Container::get('routes'), new \Oak\Header\Request());
-});
-
-Container::set('logger', function() {
-        return new logger();
 });
 
 $app = Container::get('app');

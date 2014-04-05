@@ -7,7 +7,6 @@ class Config extends \Oak\Facades\Facade{
 
     public function __construct(){}
 
-
     /**
     *    Tell which name class is registered with in the IoC container
     *
