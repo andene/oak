@@ -1,0 +1,60 @@
+// Vars
+$colorBackground: #efefef;
+$colorContainerBackground: #fff;
+$colorMenuBackground: #22313F;
+
+//Functions
+@function calculateEm($sizeValue, $context: 16) {
+  @return ($sizeValue / $context) *1em;
+}
+
+body,
+html {
+    margin:0;
+    padding:0;
+}
+body {
+    background-color:$colorBackground;
+    font-family: 'Source Sans Pro', Arial;
+}
+
+.menu {
+    background-color: $colorMenuBackground;
+    font-weight: 200;
+    padding-top: 1rem;
+    padding-bottom:0;
+
+    h1 {
+        padding:0;
+        margin:0;
+        display:inline;
+        float:left;
+        color: #52B3D9;
+        font-size: calculateEm(22);
+    }
+
+    .primaryMenu {
+        float:right;
+        list-style:none;
+
+        li{
+            float:left;
+            margin-right: 1rem;
+
+            a {
+                color: #fff;
+                text-decoration:none;
+            }
+        }
+
+    }
+}
+
+h2 {
+    color:#C0392B;
+}
+.content {
+    margin: calculateEm(40) auto calculateEm(10) auto;
+    background-color: #fff;
+    padding: calculateEm(30);
+}
