@@ -16,9 +16,7 @@ class IndexController extends \Oak\Controller\BaseController {
 
 
         $view = new \Oak\View\View('index.index');
-        $view->with('title', $this->title)
-             ->with('headline', 'Welcome to OakFramework')
-             ->with('footer', date('H:i:s'));
+        $view->with('title', $this->title)->with('headline', 'Min rubrik');
 
         return $view;
 
