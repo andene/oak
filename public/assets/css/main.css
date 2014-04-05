@@ -1,11 +1,23 @@
 body {
     font-family: "Helvetica", "Arial";
 }
+.container {
+    width: 960px;
+    margin:0 auto;
+}
 .primaryMenu {
     list-style:none;
     padding:0;
+    width:100%;
+    clear:both;
+    height: 40px;
 }
 .primaryMenu li {
     float:left;
     margin-right: 20px;
+}
+.content {
+    clear:both;
+    margin: 30px 0;
+    width: 100%;
 }

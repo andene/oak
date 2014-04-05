@@ -11,11 +11,14 @@
         <link rel="stylesheet" href="/assets/css/main.css">
     </head>
     <body>
-        
-    @include('partial.menu')
+        <div class="container">
 
-    {{layout_content}}
+            @include('partial.menu')
 
+        <div class="content">
+            {{layout_content}}
+        </div>
+        </div>
     <script src="js/main.js"></script>
     </body>
 </html>

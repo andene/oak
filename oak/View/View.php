@@ -89,7 +89,7 @@ class View {
         return $this->fixPath($layoutFile);
     }
 
-    public function with(string $key, string $value):View {
+    public function with(string $key, mixed<string, array, object> $value):View {
         $this->properties[$key] = $value;
         return $this;
     }
