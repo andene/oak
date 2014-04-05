@@ -7,4 +7,8 @@ This framework is built for myself to try out some of the new fetures in [Hack](
 
 ## Routes
 
-Routes is managed in ´bootstrap/routes.php´
+Routes is managed in "bootstrap/routes.php"
+
+```php
+// bootstrap/routes.php
+```
