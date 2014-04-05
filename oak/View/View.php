@@ -1,5 +1,7 @@
 <?hh namespace Oak\View;
 
+use \Oak\Config\Config;
+
 class View {
 
     private Map $properties = Map {};
@@ -12,8 +14,7 @@ class View {
 
     public function __construct(private string $viewpath):View {
 
-        $config = \Container::get('config');
-        $this->viewFolder = $config['viewFolder']."/";
+        $this->viewFolder = Config::get('viewFolder')."/";
 
         $this->viewpath = $viewpath;
         $path = $this->fixPath($viewpath);
