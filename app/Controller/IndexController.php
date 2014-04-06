@@ -17,6 +17,7 @@ class IndexController extends \Oak\Controller\BaseController {
              ->with('headline', 'Welcome to OakFramework')
              ->with('description', 'OakFramework is a MVC framework build in Hack running on HHVM');
 
+
         return $view;
 
     }
