@@ -60,7 +60,11 @@ use \Oak\App\App;
 
 require "../bootstrap/boot.php";
 
-Container::set('app', function() use ($routes) {
+Container::set('request', function() {
+    return new \Oak\Header\Request();
+});
+
+Container::set('app', function() {
     return new App(Container::get('routes'), new \Oak\Header\Request());
 });
 
