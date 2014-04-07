@@ -1,6 +1,6 @@
 {
     "name": "oak\oak",
-    "description" : "This is a lightweight framework build in Hack running och HHVM",
+    "description" : "Framework_in_Hack",
     "version" : "0.1.6",
     "require": {
 
