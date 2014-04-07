@@ -1,17 +1,25 @@
-<?hh namespace App\controller;
+<?hh namespace App\Controller;
 
 
 class IndexController extends \Oak\Controller\BaseController {
 
-    public function __construct($params):void {
+    public string $title;
+
+    public function __construct():void {
         parent::__construct();
-        echo __FUNCTION__ . " loaded";
-        print_r($params);
+        $this->title = "Oak Framework 0.1.0";
     }
 
-    public function about($username, $id) :void {
-        echo "<br />About Action";
-        echo __FUNCTION__ . " loaded";
-        echo "loaded " . $username . " with id " . $id;
+    public function index():\Oak\View\View {
+
+        $view = new \Oak\View\View('index.index');
+        $view->with('title', $this->title)
+             ->with('headline', 'Welcome to OakFramework')
+             ->with('description', 'OakFramework is a MVC framework build in Hack running on HHVM');
+
+
+        return $view;
+
     }
+
 }
