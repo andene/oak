@@ -1,5 +1,5 @@
 {
-    "name": "oak\\oak",
+    "name": "oak/oak",
     "description" : "This is a lightweight framework build in Hack running och HHVM",
     "version" : "0.1.6",
     "require": {
