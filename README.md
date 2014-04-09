@@ -5,22 +5,10 @@
 This framework is built for myself to try out some of the new fetures in [Hack](http://hacklang.org)
 
 
-## Routes
+## Oak Framework
 
-Routes is managed in "bootstrap/routes.php"
+Read more at official website [Oak Framework](http://oakframework.com/)
 
-```php
-// bootstrap/routes.php
+## Contact
 
-<?hh
-use \Oak\Route\Route;
-use \Oak\Route\Routes;
-
-$routes = new Routes();
-
-$routes->addRoute(new Route('/', 'index', 'index'));
-$routes->addRoute(new Route('info/{param}', 'index', 'about'));
-
-Container::set('routes', $routes);
-
-```
+Contact me at Twitter @erikssonandreas
