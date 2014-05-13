@@ -1,12 +1,11 @@
 <?hh
-require "../vendor/autoload.php";
-
+require "vendor/autoload.php";
 
 use \Oak\App\Facade\App;
 use \Oak\Header\Request;
 use \Oak\Container\Container;
 
-require "../bootstrap/boot.php";
+require "bootstrap/boot.php";
 
 
 Container::set('app', function() {
@@ -14,4 +13,3 @@ Container::set('app', function() {
 });
 
 
-App::run();

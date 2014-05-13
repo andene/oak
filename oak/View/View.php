@@ -1,6 +1,6 @@
 <?hh namespace Oak\View;
 
-use \Oak\Config\Config;
+use \Oak\Config\Facade\Config;
 
 class View {
 
@@ -12,40 +12,33 @@ class View {
     private $viewFolder;
     public $doneView;
 
-    public function __construct(private string $viewpath):View {
-
-        $this->viewFolder = Config::get('viewFolder')."/";
+    public function __construct(private string $viewpath, string $viewFolder):void {
+        
+        $this->viewFolder = $viewFolder.DIRECTORY_SEPARATOR;
 
         $this->viewpath = $viewpath;
+
         $path = $this->fixPath($viewpath);
 
         if(!file_exists($path)) {
-            throw new \Oak\Exception\NotFoundException("View file ".$viewpath." not found", 0, null);
+            throw new \Oak\Exception\NotFoundException('View file '.$viewpath.' not found', 0, null);
         }
 
         $this->viewFilePath = $path;
-        return $this;
+          
+    }
+    public function getViewPath():string {
+        return $this->viewpath;
     }
 
-    public function render() {
+    public function render():string {
 
         ob_start();
         include $this->viewFilePath;
         $this->viewContent = ob_get_clean();
 
         if($this->useLayout()) {
-            ob_start();
-            include $this->getLayoutFilePath();
-            $layout = ob_get_clean();
-
-            // Remove @layout() command from view
-            $this->viewContent = preg_replace('/\@layout\(\'([a-zA-Z0-9\.]*)\'\)/','', $this->viewContent);
-
-            // Add the view content to the layout in by replace of {{ layout_content }}
-            $layout = preg_replace('/{{layout_content}}/', $this->viewContent, $layout);
-
-            $this->doneView = $layout;
-
+            $this->doneView = $this->getLayout();
         } else {
             $this->doneView = $this->viewContent;
         }
@@ -67,6 +60,10 @@ class View {
         return $this->layoutPath;
     }
 
+    /**
+     * Check if @layout tag is found in view file content
+     * return @bool
+     */
     private function useLayout():bool {
         if(preg_match('/@layout/', $this->viewContent)) {
             return true;
@@ -101,7 +98,27 @@ class View {
         }
     }
 
-    private function fixPath($path) {
+    /**
+     * Get the contents of layout file and remove the @layout keyword from
+     * contents. Replace the {{layout_content}} tag with content of the view file  
+     *
+     * return @string
+     */
+    protected function getLayout():string {
+        ob_start();
+        include $this->getLayoutFilePath();
+        $layout = ob_get_clean();
+
+        // Remove @layout() command from view
+        $this->viewContent = preg_replace('/\@layout\(\'([a-zA-Z0-9\.]*)\'\)/','', $this->viewContent);
+
+        // Add the view content to the layout in by replace of {{ layout_content }}
+        $layout = preg_replace('/{{layout_content}}/', $this->viewContent, $layout);
+
+        return $layout;
+    }
+
+    private function fixPath(string $path):string {
 
         $path = str_replace('.', DIRECTORY_SEPARATOR, $path);
 

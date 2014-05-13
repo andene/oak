@@ -1,9 +1,9 @@
 <?hh namespace Oak\Config;
 
 
-class Config extends \Oak\Facades\Facade{
+class Config {
 
-    public static Map $container = Map {};
+    public Map $container = Map {};
 
     public function __construct(){}
 
@@ -13,16 +13,17 @@ class Config extends \Oak\Facades\Facade{
     *    return @string
     */
     public static function getName():string {
-        return 'config';
+        return "config";
     }
 
-    public function set($key, $value): void {
-        self::$container[$key] = $value;
+    public function set(string $key, $value): void {
+
+        $this->container->set($key, $value);
     }
 
-    public function get(string $key):string {
-        return self::$container[$key];
+    public function get(string $key):mixed {
+
+        return $this->container->get($key);
     }
-
-
+    
 }

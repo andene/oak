@@ -3,7 +3,7 @@
 use \App\Controller\IndexController;
 
 
-class App{
+class App {
 
     public $routes;
     protected $request;
@@ -12,31 +12,33 @@ class App{
 
         $this->request = $request;
         $this->routes = $routes;
-
     }
 
-    public function run():void {
+    public function run():string {
+        try { 
+           $rTo = $this->parseRequestRoute();
 
-        try {
-            $rTo = $this->parseRequestRoute();
+            if($rTo->controller instanceof \Closure) {
+                    call_user_func_array($rTo->controller, $rTo->params);
+
+            } else {
+                $controller = $this->createController($rTo->controller);
+                $view = call_user_func_array(array($controller, $rTo->action), $rTo->params);
+
+                if($view instanceof \Oak\View\View) {
+                    $this->dispatch($view);
+                } else {
+                    echo $view;
+                }
+            }
+
         } catch (\Oak\Exception\NotFoundException $e) {
             $error = new \App\Controller\ErrorController($e);
             $error->displayError();
-            die();
+            
         }
-
-        if($rTo->controller instanceof \Closure) {
-            call_user_func_array($rTo->controller, $rTo->params);
-
-        } else {
-            $controller = $this->createController($rTo->controller);
-            $view = call_user_func_array(array($controller, $rTo->action), $rTo->params);
-            if($view instanceof \Oak\View\View) {
-                $this->dispatch($view);
-            } else {
-                echo $view;
-            }
-        }
+        
+        
     }
 
     public function dispatch($view): void {
@@ -45,6 +47,7 @@ class App{
 
     public function parseRequestRoute(): \Oak\Route\Route {
 
+	$matches = [] ;
         preg_match_all('#{([a-z0-9][a-zA-Z0-9_,]*)}#', urldecode($this->request->getRequestUri()), $matches);
         foreach($this->routes->getRoutes() as $route) {
             //Change parameters to regex
@@ -56,11 +59,12 @@ class App{
                         return $route;
                     }
             }
-
+		
+            $m = []; 
             if(preg_match($regex, $this->request->getRequestUri(), $m)) {
+                $keys = [];
                 preg_match_all('/{([a-zA-Z0-9_-]*)}/', $route->path, $keys); // Get the parameter keys from request URI
                 unset($m[0]); //Remove the whole request to be able to merge keys and parameters
-
 
                 $matched = array_combine($keys[1], $m);
                 $route->setParams($matched);
@@ -82,7 +86,6 @@ class App{
         return $controller;
 
     }
-
 
 
 }

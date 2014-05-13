@@ -3,17 +3,19 @@
 class Route {
 
     public \Vector $params;
-    public function __construct(public string $path, public mixed<object, string> $controller, public ?string $action, $params = null) {
+    public function __construct(public string $path, public mixed<object, string> $controller, public ?string $action) {
 
         $this->path = strtolower($path);
         $this->controller = $this->_getController($controller);
         $this->action = strtolower($action);
-
-        if(null !== $params) {
-            $this->params = strtolower($params);
-        }
     }
 
+
+    /**
+     * Function used to check if given controller is a closure or a string. 
+     *
+     * return mixed<string, object> @controller
+     */
     private function _getController($controller): mixed<string, object> {
 
         if(is_object($controller) && $controller instanceof \Closure) {
@@ -23,9 +25,7 @@ class Route {
         } 
     }
 
-
     public function setParams(array $params):void {
         $this->params = $params;
     }
-
 }

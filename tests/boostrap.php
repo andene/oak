@@ -1,7 +1,5 @@
 <?hh
-require "../vendor/autoload.php";
-
-
+include "../vendor/autoload.php";
 use \Oak\App\Facade\App;
 use \Oak\Header\Request;
 use \Oak\Container\Container;
