@@ -22,16 +22,35 @@ class ContainerText extends TestCase {
 
 		try {
 			Container::set('test', 'passedString');
-			$this->setExpectedException("InvalidArgumentException");
 
 		} catch (\InvalidArgumentException $e) {
 			$this->assertTrue($e instanceof \InvalidArgumentException);
-
 		}	
-
-
-
 	}
+
+	/**
+     * @expectedException        InvalidArgumentException
+     */	
+	public function testContainerSetNonObjectExpect():void {
+		Container::set('test', 'passedString');
+	}
+
+	/**
+     * @expectedException        InvalidArgumentException
+     * @expectedExceptionMessage Only objects can be registred
+     */	
+	public function testContainerSetNonObjectExpectWithMessage():void {
+
+		Container::set('test', 'passedString');
+		
+	}
+
+	public function testExpectedException():void {
+		$this->setExpectedException('InvalidArgumentException');
+		Container::set('test', 'passedString');
+	}	
+
+
 	
 
 }
