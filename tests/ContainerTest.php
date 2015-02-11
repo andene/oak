@@ -18,20 +18,14 @@ class ContainerText extends TestCase {
 		$this->assertEquals(count(Container::getServices()), 0, "Container is excepcted to be empty");
 	}
 
-	public function testContainerSetNonObject():void {
+	
 
-		try {
-			Container::set('test', 'passedString');
-			$this->setExpectedException("InvalidArgumentException");
-
-		} catch (\InvalidArgumentException $e) {
-			$this->assertTrue($e instanceof \InvalidArgumentException);
-
-		}	
+	public function testExpectedException():void {
+		$this->setExpectedException('InvalidArgumentException');
+		Container::set('test', 'passedString');
+	}	
 
 
-
-	}
 	
 
 }

@@ -7,6 +7,7 @@ class ErrorController implements ErrorControllerInterface {
         $this->e = $e;
     }
     public function displayError():void {
+        echo "<h2>Something went wrong</h2>";
         echo "<pre>";
         print_r($this->e);
         echo "</pre>";

@@ -15,6 +15,16 @@ class Container implements \Oak\Container\ContainerInterface {
         }
     }
 
+
+    public static function register(string $name, $service) {
+        if(!is_object($service)) {
+            throw new \InvalidArgumentException("Only objects can be registred");
+        }
+        if(!in_array($name, static::$services, true)) {
+            static::$services[$name] = $service;
+        }
+    }
+
     public static function get($name, array $params = array()) {
         if(!isset(static::$services[$name])) {
             throw new \RuntimeException($name ." has not been registred in the container");
