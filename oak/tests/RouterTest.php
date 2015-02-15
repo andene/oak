@@ -1,10 +1,19 @@
-<?hh namespace Oak\Tests;
+<?hh namespace Tests;
 
 use \Oak\Route\Route;
+use \Oak\Container\Container;
+use \Oak\App\Facade\App;
+
 
 class RouterTest extends \Oak\Test\TestCase {
 	
+	public function setUp() {
+		parent::setUp();
+
+	}
+
 	public function testCreateRouteObject() {
+
     	$r = new \Oak\Route\Route('/', 'index', 'index');
     	
     	$this->assertEquals('index', $r->controller, 'Controller is not equal with index');
@@ -17,6 +26,15 @@ class RouterTest extends \Oak\Test\TestCase {
 
 		$isClosure = $r->controller instanceof \Closure;
 		$this->assertTrue($isClosure);
+	
 	}
 
+
+	/** @test */
+	public function isCorrect() {
+
+		$req = Container::getServices();
+		print_r($req);
+		$this->assertTrue(true);
+	}
 }

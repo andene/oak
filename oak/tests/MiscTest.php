@@ -1,4 +1,4 @@
-<?hh namespace Oak\Tests;
+<?hh namespace Tests;
 
 /**
  *  Class to test misc functions

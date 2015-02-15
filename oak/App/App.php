@@ -86,12 +86,7 @@ class App {
     public function parseRequestRoute(): \Oak\Route\Route {
 
 	   $matches = [] ;
-//        echo "<pre>";
-  //      print_r($this->request); 
 
-    //    echo $_GET['limit'];echo $_GET['order'];
-    //    
-    //    
         if(strpos($this->request->getServerVar('request_uri'), '&') !== false) {
             
             $url = substr($this->request->getServerVar('request_uri'), 0, strpos($this->request->getServerVar('request_uri'), '&'));
@@ -101,6 +96,7 @@ class App {
         }
 
         preg_match_all('#{([a-z0-9][a-zA-Z0-9_,]*)}#', urldecode($url), $matches);
+
         foreach($this->routes->getRoutes() as $route) {
             //Change parameters to regex
             $regex = preg_replace('/{.*?}/', '([a-zA-Z0-9_-]*)', $route->path);
@@ -113,7 +109,9 @@ class App {
             }
 		
             $m = []; 
+
             if(preg_match($regex, $url, $m)) {
+
                 $keys = [];
                 preg_match_all('/{([a-zA-Z0-9_-]*)}/', $route->path, $keys); // Get the parameter keys from request URI
                 unset($m[0]); //Remove the whole request to be able to merge keys and parameters
